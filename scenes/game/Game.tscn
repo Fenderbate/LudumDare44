@@ -1,4 +1,4 @@
-[gd_scene load_steps=8 format=2]
+[gd_scene load_steps=9 format=2]
 
 [ext_resource path="res://scenes/game/Game.gd" type="Script" id=1]
 [ext_resource path="res://scenes/game/SolarSystem.gd" type="Script" id=2]
@@ -7,6 +7,7 @@
 [ext_resource path="res://prefabs/robobase/x32_robobase_sprite.png" type="Texture" id=5]
 [ext_resource path="res://prefabs/sun/x64_sun_texture.png" type="Texture" id=6]
 [ext_resource path="res://prefabs/sun/x64_sun_mask.png" type="Texture" id=7]
+[ext_resource path="res://prefabs/raid_ship/RaidShip.tscn" type="PackedScene" id=8]
 
 [node name="Game" type="Node2D"]
 position = Vector2( 1556.37, 309.054 )
@@ -59,7 +60,7 @@ planet_name = "Humpa (human base)"
 rotation = -0.785397
 
 [node name="Robobase" parent="SolarSystem/Pivot2" instance=ExtResource( 3 )]
-position = Vector2( -250, 0 )
+position = Vector2( -578.87, 0 )
 is_player_base = true
 planet_name = "Base of Operations"
 regen_time_interval = 0.25
@@ -73,4 +74,28 @@ texture = ExtResource( 5 )
 land = ExtResource( 6 )
 clouds = null
 mask = ExtResource( 7 )
+
+[node name="RaidShip" parent="." instance=ExtResource( 8 )]
+position = Vector2( -115.394, 30.2355 )
+
+[node name="RaidShip2" parent="." instance=ExtResource( 8 )]
+position = Vector2( -161.944, -117.965 )
+
+[node name="RaidShip3" parent="." instance=ExtResource( 8 )]
+position = Vector2( -241.745, -104.665 )
+
+[node name="RaidShip4" parent="." instance=ExtResource( 8 )]
+position = Vector2( -11.8441, -136.015 )
+
+[node name="RaidShip5" parent="." instance=ExtResource( 8 )]
+position = Vector2( -90.6942, -182.565 )
+
+[node name="RaidShip6" parent="." instance=ExtResource( 8 )]
+position = Vector2( -53.6442, -76.1647 )
+
+[node name="RaidShip7" parent="." instance=ExtResource( 8 )]
+position = Vector2( 141.106, -96.1147 )
+
+[node name="RaidShip8" parent="." instance=ExtResource( 8 )]
+position = Vector2( 23.3059, -189.215 )
 

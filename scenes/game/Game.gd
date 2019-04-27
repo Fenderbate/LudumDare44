@@ -9,10 +9,9 @@ var move_camera = false
 # Called when the node enters the scene tree for the first time.
 func _ready():
 	pass # Replace with function body.
+	Global.robobase = $SolarSystem/Pivot2/Robobase
 
 func _input(event):
-	if event is InputEventMouseButton:
-		print(event.button_index)
 	if event is InputEventMouseButton:
 		if event.button_index == 2 or event.button_index == 3:
 			if event.is_pressed():
