@@ -19,11 +19,15 @@ var resistance_power = 100
 var resistance_power_regen = 1
 export(float)var MAX_RESISTANCE_POWER = 100
 
+export(PackedScene)var raid_ship = null
+
 # Called when the node enters the scene tree for the first time.
 func _ready():
 	$CollisionShape2D.shape = CircleShape2D.new()
 	$CollisionShape2D.shape.radius = sprite_size
 	$RegenTimer.wait_time = regen_time_interval
+	resistance_power = MAX_RESISTANCE_POWER
+	population = MAX_POPULATION
 
 func raid(raid_power):
 	resistance_power -= raid_power
@@ -58,3 +62,14 @@ func _on_RegenTimer_timeout():
 		population += repopulation_rate
 		if population > MAX_POPULATION:
 			population = MAX_POPULATION
+
+
+func _on_RaidTimer_timeout():
+	if Global.raiding:
+		if get_tree().root.get_node("Game").lives >= 5:
+			get_tree().root.get_node("Game").lives -= 5
+			get_tree().root.get_node("Game").set_payment(0)
+			var ship = raid_ship.instance()
+			ship.global_position = global_position - get_tree().root.get_node("Game").global_position
+			get_tree().root.get_node("Game").add_child(ship)
+			print(Global.raiding)

@@ -1,12 +1,44 @@
-[gd_scene load_steps=3 format=2]
+[gd_scene load_steps=10 format=2]
 
 [ext_resource path="res://prefabs/robobase/Robobase.gd" type="Script" id=1]
+[ext_resource path="res://prefabs/raid_ship/RaidShip.tscn" type="PackedScene" id=2]
+[ext_resource path="res://prefabs/surface_base/Surface.gd" type="Script" id=3]
+[ext_resource path="res://prefabs/robobase/x32_robobase_sprite.png" type="Texture" id=4]
+[ext_resource path="res://prefabs/robobase/x64_robobase_mask.png" type="Texture" id=5]
+[ext_resource path="res://materials/rotate_coulds_material.tres" type="Material" id=6]
 
 [sub_resource type="CircleShape2D" id=1]
 radius = 16.0
 
-[node name="Body" type="Area2D"]
+[sub_resource type="Shader" id=2]
+code = "shader_type canvas_item;
+
+uniform float speed = 1.0;
+uniform sampler2D mask_texture;
+
+void fragment() {
+    vec4 display_texture = texture(TEXTURE,UV);
+	
+	display_texture = texture(TEXTURE, vec2(UV.x + TIME*speed, UV.y));
+	
+	display_texture.a *= texture(mask_texture, UV).a;
+	
+	COLOR = display_texture;
+}"
+
+[sub_resource type="ShaderMaterial" id=3]
+shader = SubResource( 2 )
+shader_param/speed = 0.1
+shader_param/mask_texture = ExtResource( 5 )
+
+[node name="Robobase" type="Area2D"]
 script = ExtResource( 1 )
+is_player_base = true
+planet_name = "Base of Operations"
+regen_time_interval = 100.0
+MAX_POPULATION = 1024.0
+MAX_RESISTANCE_POWER = 1024.0
+raid_ship = ExtResource( 2 )
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
 shape = SubResource( 1 )
@@ -14,5 +46,27 @@ shape = SubResource( 1 )
 [node name="RegenTimer" type="Timer" parent="."]
 autostart = true
 
+[node name="RaidTimer" type="Timer" parent="."]
+autostart = true
+
+[node name="Surface" type="Node2D" parent="."]
+position = Vector2( 0, 0.37735 )
+z_index = -1
+script = ExtResource( 3 )
+land = ExtResource( 4 )
+mask = ExtResource( 5 )
+
+[node name="Land" type="Sprite" parent="Surface"]
+material = SubResource( 3 )
+scale = Vector2( 2, 2 )
+z_index = 1
+texture = ExtResource( 4 )
+
+[node name="Clouds" type="Sprite" parent="Surface"]
+material = ExtResource( 6 )
+scale = Vector2( 2, 2 )
+z_index = 2
+
 [connection signal="input_event" from="." to="." method="_on_Body_input_event"]
 [connection signal="timeout" from="RegenTimer" to="." method="_on_RegenTimer_timeout"]
+[connection signal="timeout" from="RaidTimer" to="." method="_on_RaidTimer_timeout"]

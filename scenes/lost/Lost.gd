@@ -1,10 +1,8 @@
-extends Node
+extends Control
 
-var selected_planet = null
-var robobase = null
-var raid_target = null
-
-var raiding = false
+# Declare member variables here. Examples:
+# var a = 2
+# var b = "text"
 
 # Called when the node enters the scene tree for the first time.
 func _ready():

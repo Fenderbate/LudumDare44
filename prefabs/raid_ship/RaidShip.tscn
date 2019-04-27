@@ -10,3 +10,12 @@ script = ExtResource( 1 )
 scale = Vector2( 4, 4 )
 texture = ExtResource( 2 )
 
+[node name="AttackTimer" type="Timer" parent="."]
+one_shot = true
+
+[node name="WanderTimer" type="Timer" parent="."]
+wait_time = 5.0
+autostart = true
+
+[connection signal="timeout" from="AttackTimer" to="." method="_on_Timer_timeout"]
+[connection signal="timeout" from="WanderTimer" to="." method="_on_WanderTimer_timeout"]

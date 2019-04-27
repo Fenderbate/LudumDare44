@@ -18,10 +18,12 @@ mask = ExtResource( 4 )
 [node name="Land" type="Sprite" parent="."]
 material = ExtResource( 5 )
 scale = Vector2( 2, 2 )
+z_index = 1
 texture = ExtResource( 2 )
 
 [node name="Clouds" type="Sprite" parent="."]
 material = ExtResource( 6 )
 scale = Vector2( 2, 2 )
+z_index = 2
 texture = ExtResource( 3 )
 
