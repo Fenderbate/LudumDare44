@@ -1,0 +1,26 @@
+[gd_scene load_steps=7 format=2]
+
+[ext_resource path="res://prefabs/surface_base/Surface.gd" type="Script" id=1]
+[ext_resource path="res://prefabs/earth/x32_earth_texture.png" type="Texture" id=2]
+[ext_resource path="res://prefabs/earth/x32_clouds.png" type="Texture" id=3]
+[ext_resource path="res://prefabs/earth/x32_mask.png" type="Texture" id=4]
+[ext_resource path="res://materials/rotate_land_material.tres" type="Material" id=5]
+[ext_resource path="res://materials/rotate_coulds_material.tres" type="Material" id=6]
+
+[node name="Surface" type="Node2D"]
+position = Vector2( 0, 0.37735 )
+script = ExtResource( 1 )
+land = ExtResource( 2 )
+clouds = ExtResource( 3 )
+mask = ExtResource( 4 )
+
+[node name="Land" type="Sprite" parent="."]
+material = ExtResource( 5 )
+scale = Vector2( 2, 2 )
+texture = ExtResource( 2 )
+
+[node name="Clouds" type="Sprite" parent="."]
+material = ExtResource( 6 )
+scale = Vector2( 2, 2 )
+texture = ExtResource( 3 )
+
