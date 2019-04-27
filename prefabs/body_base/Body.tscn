@@ -1,12 +1,9 @@
-[gd_scene load_steps=5 format=2]
+[gd_scene load_steps=4 format=2]
 
 [ext_resource path="res://prefabs/body_base/Body.gd" type="Script" id=1]
 
 [sub_resource type="CircleShape2D" id=1]
 radius = 16.0
-
-[sub_resource type="RectangleShape2D" id=2]
-extents = Vector2( 32.714, 47.1215 )
 
 [sub_resource type="Animation" id=3]
 resource_name = "show"
@@ -54,19 +51,20 @@ script = ExtResource( 1 )
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
 shape = SubResource( 1 )
 
-[node name="MouseLeaveDetector" type="Area2D" parent="."]
-visible = false
-
-[node name="CollisionShape2D" type="CollisionShape2D" parent="MouseLeaveDetector"]
-position = Vector2( 0, -30.114 )
-shape = SubResource( 2 )
-
 [node name="Info" type="Panel" parent="."]
+visible = false
 margin_left = -120.0
 margin_top = -232.0
 margin_right = 120.0
 margin_bottom = -52.0
 rect_pivot_offset = Vector2( 120, 90 )
+
+[node name="Close" type="Button" parent="Info"]
+margin_left = 218.32
+margin_top = 1.58713
+margin_right = 238.32
+margin_bottom = 21.5871
+text = "X"
 
 [node name="PlanetName" type="Label" parent="Info"]
 margin_left = 24.0
@@ -90,15 +88,19 @@ margin_bottom = 118.0
 text = "Resistance: "
 
 [node name="Raid" type="Button" parent="Info"]
-margin_left = 64.0
-margin_top = 144.0
-margin_right = 176.0
-margin_bottom = 164.0
+margin_left = 72.0
+margin_top = 148.0
+margin_right = 168.0
+margin_bottom = 168.0
 text = "Raid"
 
 [node name="MenuAP" type="AnimationPlayer" parent="Info"]
 anims/show = SubResource( 3 )
 
-[connection signal="mouse_entered" from="." to="." method="_on_Body_mouse_entered"]
-[connection signal="mouse_exited" from="MouseLeaveDetector" to="." method="_on_MouseLeaveDetector_mouse_exited"]
+[node name="RegenTimer" type="Timer" parent="."]
+autostart = true
+
+[connection signal="input_event" from="." to="." method="_on_Body_input_event"]
+[connection signal="button_down" from="Info/Close" to="." method="_on_Close_button_down"]
 [connection signal="button_down" from="Info/Raid" to="." method="_on_Raid_button_down"]
+[connection signal="timeout" from="RegenTimer" to="." method="_on_RegenTimer_timeout"]

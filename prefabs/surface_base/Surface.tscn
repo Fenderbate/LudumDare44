@@ -9,6 +9,7 @@
 
 [node name="Surface" type="Node2D"]
 position = Vector2( 0, 0.37735 )
+z_index = -1
 script = ExtResource( 1 )
 land = ExtResource( 2 )
 clouds = ExtResource( 3 )

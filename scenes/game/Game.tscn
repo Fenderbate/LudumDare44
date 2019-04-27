@@ -1,10 +1,11 @@
-[gd_scene load_steps=6 format=2]
+[gd_scene load_steps=7 format=2]
 
 [ext_resource path="res://scenes/game/Game.gd" type="Script" id=1]
-[ext_resource path="res://prefabs/body_base/Body.tscn" type="PackedScene" id=2]
-[ext_resource path="res://prefabs/surface_base/Surface.tscn" type="PackedScene" id=3]
-[ext_resource path="res://prefabs/sun/x64_sun_texture.png" type="Texture" id=4]
-[ext_resource path="res://prefabs/sun/x64_sun_mask.png" type="Texture" id=5]
+[ext_resource path="res://scenes/game/SolarSystem.gd" type="Script" id=2]
+[ext_resource path="res://prefabs/body_base/Body.tscn" type="PackedScene" id=3]
+[ext_resource path="res://prefabs/surface_base/Surface.tscn" type="PackedScene" id=4]
+[ext_resource path="res://prefabs/sun/x64_sun_texture.png" type="Texture" id=5]
+[ext_resource path="res://prefabs/sun/x64_sun_mask.png" type="Texture" id=6]
 
 [node name="Game" type="Node2D"]
 script = ExtResource( 1 )
@@ -17,16 +18,30 @@ drag_margin_right = 0.0
 drag_margin_bottom = 0.0
 
 [node name="SolarSystem" type="YSort" parent="."]
+script = ExtResource( 2 )
 
-[node name="Humpa" parent="." instance=ExtResource( 2 )]
+[node name="Pivot1" type="Position2D" parent="SolarSystem"]
+
+[node name="Humpa" parent="SolarSystem/Pivot1" instance=ExtResource( 3 )]
 editor/display_folded = true
 position = Vector2( -204.25, 0 )
 planet_name = "Humpa (human base)"
 
-[node name="Surface" parent="Humpa" instance=ExtResource( 3 )]
+[node name="Surface" parent="SolarSystem/Pivot1/Humpa" instance=ExtResource( 4 )]
 
-[node name="Sun" parent="." instance=ExtResource( 3 )]
-land = ExtResource( 4 )
+[node name="Pivot2" type="Position2D" parent="SolarSystem"]
+rotation = -0.785397
+
+[node name="Humpa" parent="SolarSystem/Pivot2" instance=ExtResource( 3 )]
+editor/display_folded = true
+position = Vector2( -250, 0 )
+planet_name = "Humpa (human base)"
+MAX_POPULATION = 200.0
+
+[node name="Surface" parent="SolarSystem/Pivot2/Humpa" instance=ExtResource( 4 )]
+
+[node name="Sun" parent="SolarSystem" instance=ExtResource( 4 )]
+land = ExtResource( 5 )
 clouds = null
-mask = ExtResource( 5 )
+mask = ExtResource( 6 )
 
