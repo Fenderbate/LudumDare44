@@ -25,7 +25,6 @@ func _ready():
 	$CollisionShape2D.shape.radius = sprite_size
 	$RegenTimer.wait_time = regen_time_interval
 
-
 func raid(raid_power):
 	resistance_power -= raid_power
 	population -= floor(rand_range(0,3))

@@ -11,33 +11,28 @@ func _ready():
 	pass # Replace with function body.
 
 func _input(event):
-	if event is InputEventMouseButton and event.button_index == 2:
-		if event.is_pressed():
-			move_camera = true
-		else:
-			move_camera = false
-		
+	if event is InputEventMouseButton:
+		print(event.button_index)
+	if event is InputEventMouseButton:
+		if event.button_index == 2 or event.button_index == 3:
+			if event.is_pressed():
+				move_camera = true
+			else:
+				move_camera = false
+		elif event.button_index == 5 and event.pressed and $Camera2D.zoom < Vector2(2,2):
+			$Camera2D.zoom += Vector2(0.05,0.05)
+		elif event.button_index == 4 and event.pressed and $Camera2D.zoom > Vector2(0.1,0.1):
+			$Camera2D.zoom -= Vector2(0.05,0.05)
 	if event is InputEventMouseMotion and move_camera:
-		$Camera2D.position -= event.relative
+		$Camera2D.position -= event.relative * $Camera2D.zoom.x
+
+func show_planet_data(p_name, population, resistance):
+	$UI/Info/Data.text = str("Name: ",p_name,"\n\nNumber of lifeforms: ",population,"M\n\nResistance: ",resistance)
 
 func _physics_process(delta):
-	
-	pass
+	if Global.selected_planet != null:
+		show_planet_data(Global.selected_planet.planet_name,Global.selected_planet.population,Global.selected_planet.resistance_power)
+	else:
+		pass
 	
 
-func control_camera():
-	if abs(get_viewport().get_mouse_position().y - 300) > 250 :
-		print("asd")
-		camera_dir.y = 1 if get_viewport().get_mouse_position().y - 300 > 0 else -1
-	else:
-		camera_dir.y = 0
-	
-	if abs(get_viewport().get_mouse_position().x - 512) > 480 :
-		print("asd")
-		camera_dir.x = 1 if get_viewport().get_mouse_position().x - 480 > 0 else -1
-	else:
-		camera_dir.x = 0
-	
-	#print(get_viewport().get_mouse_position().y - 300)
-	
-	$Camera2D.position += camera_dir

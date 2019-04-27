@@ -2,15 +2,15 @@
 
 importer="texture"
 type="StreamTexture"
-path="res://.import/x64_sun_mask.png-c2dfb12885e27f1a44a40e431fa635db.stex"
+path="res://.import/x32_robobase_sprite.png-f75cbe2e66d9a5e456acbea8294d0fcb.stex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://prefabs/sun/x64_sun_mask.png"
-dest_files=[ "res://.import/x64_sun_mask.png-c2dfb12885e27f1a44a40e431fa635db.stex" ]
+source_file="res://prefabs/robobase/x32_robobase_sprite.png"
+dest_files=[ "res://.import/x32_robobase_sprite.png-f75cbe2e66d9a5e456acbea8294d0fcb.stex" ]
 
 [params]
 
@@ -19,7 +19,7 @@ compress/lossy_quality=0.7
 compress/hdr_mode=0
 compress/bptc_ldr=0
 compress/normal_map=0
-flags/repeat=0
+flags/repeat=1
 flags/filter=false
 flags/mipmaps=false
 flags/anisotropic=false
@@ -30,5 +30,5 @@ process/HDR_as_SRGB=false
 process/invert_color=false
 stream=false
 size_limit=0
-detect_3d=true
+detect_3d=false
 svg/scale=1.0
