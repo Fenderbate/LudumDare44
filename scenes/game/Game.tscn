@@ -1,22 +1,32 @@
-[gd_scene load_steps=18 format=2]
+[gd_scene load_steps=28 format=2]
 
 [ext_resource path="res://scenes/game/Game.gd" type="Script" id=1]
 [ext_resource path="res://scenes/win/Win.tscn" type="PackedScene" id=2]
 [ext_resource path="res://scenes/lost/Lost.tscn" type="PackedScene" id=3]
-[ext_resource path="res://prefabs/planet_1/x32_planet1_texture.png" type="Texture" id=4]
-[ext_resource path="res://scenes/game/parallax_1.png" type="Texture" id=5]
-[ext_resource path="res://scenes/game/SolarSystem.gd" type="Script" id=6]
-[ext_resource path="res://prefabs/body_base/Body.tscn" type="PackedScene" id=7]
-[ext_resource path="res://prefabs/surface_base/Surface.tscn" type="PackedScene" id=8]
-[ext_resource path="res://prefabs/robobase/Robobase.tscn" type="PackedScene" id=9]
-[ext_resource path="res://prefabs/planet_1/x32_planet1_clouds.png" type="Texture" id=10]
-[ext_resource path="res://prefabs/planet_2/x32_planet2_texture.png" type="Texture" id=11]
-[ext_resource path="res://prefabs/planet_2/x32_planet2_clouds.png" type="Texture" id=12]
-[ext_resource path="res://prefabs/planet_3/x32_planet3_texture.png" type="Texture" id=13]
-[ext_resource path="res://prefabs/planet_3/x32_planet3_clouds.png" type="Texture" id=14]
-[ext_resource path="res://prefabs/sun/x64_sun_texture.png" type="Texture" id=15]
-[ext_resource path="res://prefabs/sun/x64_sun_mask.png" type="Texture" id=16]
-[ext_resource path="res://prefabs/raid_ship/RaidShip.tscn" type="PackedScene" id=17]
+[ext_resource path="res://music/music.wav" type="AudioStream" id=4]
+[ext_resource path="res://scenes/tutorial/Tutorial.tscn" type="PackedScene" id=5]
+[ext_resource path="res://scenes/game/balance_UI.png" type="Texture" id=6]
+[ext_resource path="res://misc/x15_font.tres" type="DynamicFont" id=7]
+[ext_resource path="res://scenes/game/time_texture.png" type="Texture" id=8]
+[ext_resource path="res://scenes/game/info_UI.png" type="Texture" id=9]
+[ext_resource path="res://scenes/game/stop_button.png" type="Texture" id=10]
+[ext_resource path="res://scenes/game/sound_on.png" type="Texture" id=11]
+[ext_resource path="res://scenes/game/paralax_bottom.png" type="Texture" id=12]
+[ext_resource path="res://scenes/game/paralax_middle.png" type="Texture" id=13]
+[ext_resource path="res://scenes/game/paralax_top.png" type="Texture" id=14]
+[ext_resource path="res://scenes/game/SolarSystem.gd" type="Script" id=15]
+[ext_resource path="res://prefabs/body_base/Body.tscn" type="PackedScene" id=16]
+[ext_resource path="res://prefabs/surface_base/Surface.tscn" type="PackedScene" id=17]
+[ext_resource path="res://prefabs/robobase/Robobase.tscn" type="PackedScene" id=18]
+[ext_resource path="res://prefabs/planet_1/x32_planet1_texture.png" type="Texture" id=19]
+[ext_resource path="res://prefabs/planet_1/x32_planet1_clouds.png" type="Texture" id=20]
+[ext_resource path="res://prefabs/planet_2/x32_planet2_texture.png" type="Texture" id=21]
+[ext_resource path="res://prefabs/planet_2/x32_planet2_clouds.png" type="Texture" id=22]
+[ext_resource path="res://prefabs/planet_3/x32_planet3_texture.png" type="Texture" id=23]
+[ext_resource path="res://prefabs/planet_3/x32_planet3_clouds.png" type="Texture" id=24]
+[ext_resource path="res://prefabs/sun/x64_sun_texture.png" type="Texture" id=25]
+[ext_resource path="res://prefabs/sun/x64_sun_mask.png" type="Texture" id=26]
+[ext_resource path="res://prefabs/raid_ship/RaidShip.tscn" type="PackedScene" id=27]
 
 [node name="Game" type="Node2D"]
 position = Vector2( 1539.16, 305.035 )
@@ -24,98 +34,199 @@ script = ExtResource( 1 )
 victory = ExtResource( 2 )
 lost = ExtResource( 3 )
 
+[node name="Music" type="AudioStreamPlayer" parent="."]
+stream = ExtResource( 4 )
+volume_db = -35.0
+autoplay = true
+mix_target = 2
+
 [node name="Utility" type="Node" parent="."]
+editor/display_folded = true
 
 [node name="PaymentTimer" type="Timer" parent="Utility"]
 wait_time = 120.0
 one_shot = true
-autostart = true
+
+[node name="Tutorial" parent="." instance=ExtResource( 5 )]
 
 [node name="UI" type="CanvasLayer" parent="."]
 
-[node name="StopRaid" type="Button" parent="UI"]
-visible = false
-margin_left = 0.629883
-margin_top = 344.125
-margin_right = 163.63
-margin_bottom = 391.125
-text = "Stop Raid"
+[node name="balance_UI" type="Sprite" parent="UI"]
+position = Vector2( 200.254, 68.0392 )
+scale = Vector2( 2, 2 )
+texture = ExtResource( 6 )
+
+[node name="Panel" type="Panel" parent="UI"]
+editor/display_folded = true
+self_modulate = Color( 1, 1, 1, 0 )
+margin_top = 0.377357
+margin_right = 379.0
+margin_bottom = 138.377
+
+[node name="Text" type="Label" parent="UI/Panel"]
+margin_left = 20.084
+margin_top = 47.1578
+margin_right = 236.084
+margin_bottom = 65.1578
+custom_fonts/font = ExtResource( 7 )
+text = "Payment required: "
+align = 2
+
+[node name="Payment" type="Label" parent="UI/Panel"]
+margin_left = 240.0
+margin_top = 44.0
+margin_right = 336.0
+margin_bottom = 68.0
+custom_fonts/font = ExtResource( 7 )
+align = 1
+valign = 1
+clip_text = true
+
+[node name="Text2" type="Label" parent="UI/Panel"]
+margin_left = 101.519
+margin_top = 7.50543
+margin_right = 269.519
+margin_bottom = 25.5054
+custom_fonts/font = ExtResource( 7 )
+text = "Lives Stored: "
+align = 2
+
+[node name="Lives" type="Label" parent="UI/Panel"]
+margin_left = 274.0
+margin_top = 4.0
+margin_right = 370.0
+margin_bottom = 28.0
+custom_fonts/font = ExtResource( 7 )
+align = 1
+valign = 1
+
+[node name="Label" type="Label" parent="UI/Panel"]
+anchor_right = 1.0
+anchor_bottom = 1.0
+margin_left = -28.5685
+margin_top = 70.6114
+margin_right = -119.568
+margin_bottom = -28.3886
+rect_scale = Vector2( 0.9, 0.9 )
+custom_fonts/font = ExtResource( 7 )
+text = "Time until
+next payment"
+align = 1
+valign = 1
+
+[node name="PaymentTime" type="TextureProgress" parent="UI/Panel"]
+margin_left = 168.0
+margin_top = 82.0
+margin_right = 316.0
+margin_bottom = 98.0
+value = 100.0
+texture_progress = ExtResource( 8 )
+tint_under = Color( 0, 0, 0, 1 )
+
+[node name="Pay" type="Button" parent="UI/Panel"]
+self_modulate = Color( 1, 1, 1, 0 )
+margin_left = 172.0
+margin_top = 106.0
+margin_right = 248.0
+margin_bottom = 132.0
+
+[node name="info_UI" type="Sprite" parent="UI"]
+position = Vector2( 200.036, 529.933 )
+scale = Vector2( 2, 2 )
+texture = ExtResource( 9 )
 
 [node name="Info" type="Panel" parent="UI"]
 editor/display_folded = true
+self_modulate = Color( 1, 1, 1, 0 )
 anchor_right = 1.0
 anchor_bottom = 1.0
 margin_top = 392.0
 margin_right = -799.0
 
 [node name="Data" type="Label" parent="UI/Info"]
-margin_right = 40.0
-margin_bottom = 14.0
-text = "Name: 
+margin_left = 48.7031
+margin_top = 99.3004
+margin_right = 125.703
+margin_bottom = 123.3
+custom_fonts/font = ExtResource( 7 )
+text = "Name"
+align = 2
+valign = 1
 
-Population: 
+[node name="Data2" type="Label" parent="UI/Info"]
+margin_left = -44.7335
+margin_top = 138.414
+margin_right = 125.267
+margin_bottom = 162.414
+custom_fonts/font = ExtResource( 7 )
+text = "Population"
+align = 2
+valign = 1
 
-Resistance: "
+[node name="Data3" type="Label" parent="UI/Info"]
+margin_left = 6.15417
+margin_top = 179.945
+margin_right = 126.154
+margin_bottom = 197.945
+custom_fonts/font = ExtResource( 7 )
+text = "Resistance"
+align = 2
+valign = 1
 
-[node name="Interact" type="Button" parent="UI/Info"]
-margin_left = 6.79623
-margin_top = 108.376
-margin_right = 89.7962
-margin_bottom = 128.376
-text = "Raid"
+[node name="Interact" type="TextureButton" parent="UI/Info"]
+margin_left = 294.0
+margin_top = 114.358
+margin_right = 370.0
+margin_bottom = 140.358
+expand = true
 
-[node name="Panel" type="Panel" parent="UI"]
-editor/display_folded = true
-margin_right = 281.0
-margin_bottom = 52.0
+[node name="Name" type="Label" parent="UI/Info"]
+margin_left = 130.0
+margin_top = 100.0
+margin_right = 284.0
+margin_bottom = 124.0
+custom_fonts/font = ExtResource( 7 )
+align = 1
+valign = 1
+clip_text = true
 
-[node name="Text" type="Label" parent="UI/Panel"]
-margin_top = 32.0
-margin_right = 122.0
-margin_bottom = 46.0
-text = "Payment required: "
+[node name="Population" type="Label" parent="UI/Info"]
+margin_left = 130.0
+margin_top = 138.0
+margin_right = 284.0
+margin_bottom = 162.0
+custom_fonts/font = ExtResource( 7 )
+align = 1
+valign = 1
+clip_text = true
 
-[node name="Payment" type="Label" parent="UI/Panel"]
-margin_left = 122.0
-margin_top = 32.0
-margin_right = 244.0
-margin_bottom = 46.0
-
-[node name="Text2" type="Label" parent="UI/Panel"]
-margin_right = 86.0
-margin_bottom = 14.0
-text = "Lives Stored: "
-
-[node name="Lives" type="Label" parent="UI/Panel"]
-margin_left = 86.0
-margin_right = 208.0
-margin_bottom = 14.0
-
-[node name="PaymentTime" type="TextureProgress" parent="UI/Panel"]
-editor/display_folded = true
-margin_left = 1.0
-margin_top = 52.0
-margin_right = 281.0
-margin_bottom = 72.0
-value = 100.0
-texture_under = ExtResource( 4 )
-texture_progress = ExtResource( 4 )
-tint_under = Color( 0, 0, 0, 1 )
-
-[node name="Label" type="Label" parent="UI/Panel/PaymentTime"]
-anchor_right = 1.0
-anchor_bottom = 1.0
-text = "Time untill next payment"
+[node name="Resistance" type="Label" parent="UI/Info"]
+margin_left = 130.0
+margin_top = 176.0
+margin_right = 284.0
+margin_bottom = 200.0
+custom_fonts/font = ExtResource( 7 )
 align = 1
 valign = 1
 
-[node name="Pay" type="Button" parent="UI/Panel"]
-margin_top = 84.0
-margin_right = 105.0
-margin_bottom = 104.0
-text = "Pay"
+[node name="StopRaid" type="TextureButton" parent="UI"]
+visible = false
+margin_left = 294.0
+margin_top = 546.0
+margin_right = 370.0
+margin_bottom = 572.0
+texture_normal = ExtResource( 10 )
+expand = true
+
+[node name="AudioButton" type="TextureButton" parent="UI"]
+margin_left = 952.0
+margin_right = 1024.0
+margin_bottom = 72.0
+texture_normal = ExtResource( 11 )
+expand = true
 
 [node name="Camera2D" type="Camera2D" parent="."]
+editor/display_folded = true
 current = true
 drag_margin_left = 0.0
 drag_margin_top = 0.0
@@ -123,54 +234,75 @@ drag_margin_right = 0.0
 drag_margin_bottom = 0.0
 
 [node name="ParallaxBackground" type="ParallaxBackground" parent="Camera2D"]
+editor/display_folded = true
 
-[node name="ParallaxLayer" type="ParallaxLayer" parent="Camera2D/ParallaxBackground"]
+[node name="Bottom" type="ParallaxLayer" parent="Camera2D/ParallaxBackground"]
+editor/display_folded = true
+motion_scale = Vector2( 0.25, 0.25 )
+motion_mirroring = Vector2( 2048, 1200 )
+
+[node name="Sprite" type="Sprite" parent="Camera2D/ParallaxBackground/Bottom"]
+texture = ExtResource( 12 )
+centered = false
+
+[node name="Middle" type="ParallaxLayer" parent="Camera2D/ParallaxBackground"]
+editor/display_folded = true
 motion_scale = Vector2( 0.5, 0.5 )
-motion_mirroring = Vector2( 512, 300 )
+motion_mirroring = Vector2( 2048, 1200 )
 
-[node name="Sprite" type="Sprite" parent="Camera2D/ParallaxBackground/ParallaxLayer"]
-texture = ExtResource( 5 )
+[node name="Sprite" type="Sprite" parent="Camera2D/ParallaxBackground/Middle"]
+texture = ExtResource( 13 )
+centered = false
+
+[node name="Top" type="ParallaxLayer" parent="Camera2D/ParallaxBackground"]
+editor/display_folded = true
+motion_scale = Vector2( 0.75, 0.75 )
+motion_mirroring = Vector2( 2048, 1200 )
+
+[node name="Sprite" type="Sprite" parent="Camera2D/ParallaxBackground/Top"]
+texture = ExtResource( 14 )
 centered = false
 
 [node name="SolarSystem" type="YSort" parent="."]
-editor/display_folded = true
-script = ExtResource( 6 )
+script = ExtResource( 15 )
 
 [node name="Pivot1" type="Position2D" parent="SolarSystem"]
 
-[node name="Humpa" parent="SolarSystem/Pivot1" instance=ExtResource( 7 )]
-editor/display_folded = true
+[node name="Humpa" parent="SolarSystem/Pivot1" instance=ExtResource( 16 )]
 position = Vector2( -204.25, 0 )
-planet_name = "Humpa (human base)"
+circle_radius = 48.0
+planet_name = "Humpa"
 MAX_POPULATION = 1200.0
 MAX_RESISTANCE_POWER = 534.0
 
-[node name="Surface" parent="SolarSystem/Pivot1/Humpa" instance=ExtResource( 8 )]
+[node name="Surface" parent="SolarSystem/Pivot1/Humpa" instance=ExtResource( 17 )]
 
 [node name="Pivot2" type="Position2D" parent="SolarSystem"]
 
-[node name="Robobase" parent="SolarSystem/Pivot2" instance=ExtResource( 9 )]
+[node name="Robobase" parent="SolarSystem/Pivot2" instance=ExtResource( 18 )]
 position = Vector2( -597.51, 0 )
+planet_name = "Robot Base"
 
 [node name="Pivot3" type="Position2D" parent="SolarSystem"]
 
-[node name="Lagred" parent="SolarSystem/Pivot3" instance=ExtResource( 7 )]
+[node name="Lagred" parent="SolarSystem/Pivot3" instance=ExtResource( 16 )]
 editor/display_folded = true
 position = Vector2( -115.35, 0 )
 sprite_size = 16.0
+circle_radius = 32.0
 planet_name = "Lagred"
 regen_time_interval = 0.75
 MAX_POPULATION = 200.0
 MAX_RESISTANCE_POWER = 20.0
 
-[node name="Surface" parent="SolarSystem/Pivot3/Lagred" instance=ExtResource( 8 )]
+[node name="Surface" parent="SolarSystem/Pivot3/Lagred" instance=ExtResource( 17 )]
 scale = Vector2( 0.5, 0.5 )
-land = ExtResource( 4 )
-clouds = ExtResource( 10 )
+land = ExtResource( 19 )
+clouds = ExtResource( 20 )
 
 [node name="Pivot4" type="Position2D" parent="SolarSystem"]
 
-[node name="Goracle" parent="SolarSystem/Pivot4" instance=ExtResource( 7 )]
+[node name="Goracle" parent="SolarSystem/Pivot4" instance=ExtResource( 16 )]
 editor/display_folded = true
 position = Vector2( -448.49, 0 )
 sprite_size = 48.0
@@ -179,52 +311,53 @@ regen_time_interval = 0.25
 MAX_POPULATION = 10.0
 MAX_RESISTANCE_POWER = 5.0
 
-[node name="Surface" parent="SolarSystem/Pivot4/Goracle" instance=ExtResource( 8 )]
+[node name="Surface" parent="SolarSystem/Pivot4/Goracle" instance=ExtResource( 17 )]
 scale = Vector2( 1.5, 1.5 )
-land = ExtResource( 11 )
-clouds = ExtResource( 12 )
+land = ExtResource( 21 )
+clouds = ExtResource( 22 )
 
 [node name="Pivot5" type="Position2D" parent="SolarSystem"]
 
-[node name="Ikler" parent="SolarSystem/Pivot5" instance=ExtResource( 7 )]
-editor/display_folded = true
+[node name="Ikler" parent="SolarSystem/Pivot5" instance=ExtResource( 16 )]
 position = Vector2( -321.74, 0 )
+circle_radius = 48.0
 planet_name = "Ikler"
 regen_time_interval = 0.5
 MAX_POPULATION = 320.0
 
-[node name="Surface" parent="SolarSystem/Pivot5/Ikler" instance=ExtResource( 8 )]
-land = ExtResource( 13 )
-clouds = ExtResource( 14 )
+[node name="Surface" parent="SolarSystem/Pivot5/Ikler" instance=ExtResource( 17 )]
+land = ExtResource( 23 )
+clouds = ExtResource( 24 )
 
-[node name="Sun" parent="SolarSystem" instance=ExtResource( 8 )]
-land = ExtResource( 15 )
+[node name="Sun" parent="SolarSystem" instance=ExtResource( 17 )]
+land = ExtResource( 25 )
 clouds = null
-mask = ExtResource( 16 )
+mask = ExtResource( 26 )
 
-[node name="RaidShip" parent="." instance=ExtResource( 17 )]
+[node name="RaidShip" parent="." instance=ExtResource( 27 )]
 position = Vector2( -299.328, 86.7453 )
 
-[node name="RaidShip2" parent="." instance=ExtResource( 17 )]
+[node name="RaidShip2" parent="." instance=ExtResource( 27 )]
 position = Vector2( 233.625, 96.9939 )
 
-[node name="RaidShip3" parent="." instance=ExtResource( 17 )]
+[node name="RaidShip3" parent="." instance=ExtResource( 27 )]
 position = Vector2( 115.042, -234.305 )
 scale = Vector2( 1.34045, 1.42153 )
 
-[node name="RaidShip4" parent="." instance=ExtResource( 17 )]
+[node name="RaidShip4" parent="." instance=ExtResource( 27 )]
 position = Vector2( 284.001, -77.2891 )
 
-[node name="RaidShip5" parent="." instance=ExtResource( 17 )]
+[node name="RaidShip5" parent="." instance=ExtResource( 27 )]
 position = Vector2( -174.905, -200.294 )
 
-[node name="RaidShip6" parent="." instance=ExtResource( 17 )]
+[node name="RaidShip6" parent="." instance=ExtResource( 27 )]
 position = Vector2( 63.8075, 204.168 )
 
-[node name="RaidShip8" parent="." instance=ExtResource( 17 )]
+[node name="RaidShip8" parent="." instance=ExtResource( 27 )]
 position = Vector2( -202.733, 146.52 )
 
 [connection signal="timeout" from="Utility/PaymentTimer" to="." method="_on_PaymentTimer_timeout"]
-[connection signal="button_down" from="UI/StopRaid" to="." method="_on_StopRaid_button_down"]
-[connection signal="button_down" from="UI/Info/Interact" to="." method="_on_Interact_button_down"]
 [connection signal="button_down" from="UI/Panel/Pay" to="." method="_on_Pay_button_down"]
+[connection signal="button_down" from="UI/Info/Interact" to="." method="_on_Interact_button_down"]
+[connection signal="button_down" from="UI/StopRaid" to="." method="_on_StopRaid_button_down"]
+[connection signal="button_down" from="UI/AudioButton" to="." method="_on_TextureButton_button_down"]

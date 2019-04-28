@@ -15,7 +15,7 @@ _global_script_class_icons={
 
 [application]
 
-config/name="LD44"
+config/name="Space Robots: Fight for Freedom"
 run/main_scene="res://scenes/game/Game.tscn"
 config/icon="res://icon.png"
 

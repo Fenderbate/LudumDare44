@@ -12,6 +12,9 @@ var move_camera = false
 export(PackedScene)var victory = null
 export(PackedScene)var lost = null
 
+var raid_button = preload("res://scenes/game/raid_button.png")
+var claim_button = preload("res://scenes/game/claim_button.png")
+
 # Called when the node enters the scene tree for the first time.
 func _ready():
 	pass # Replace with function body.
@@ -27,17 +30,25 @@ func _input(event):
 				move_camera = false
 		elif event.button_index == 5 and event.pressed and $Camera2D.zoom < Vector2(2,2):
 			$Camera2D.zoom += Vector2(0.05,0.05)
+			if $Camera2D.zoom.x > 1.1 and $Camera2D/ParallaxBackground/Top.visible:
+				$Camera2D/ParallaxBackground/Top.hide()
 		elif event.button_index == 4 and event.pressed and $Camera2D.zoom > Vector2(0.5,0.5):
 			$Camera2D.zoom -= Vector2(0.05,0.05)
+			if $Camera2D.zoom.x < 1.1 and !$Camera2D/ParallaxBackground/Top.visible:
+				$Camera2D/ParallaxBackground/Top.show()
 	if event is InputEventMouseMotion and move_camera:
 		$Camera2D.position -= event.relative * $Camera2D.zoom.x
 
 func show_planet_data(p_name, population, resistance):
-	$UI/Info/Data.text = str("Name: ",p_name, "\n\nNumber of lifeforms: ", population, "M\n\nResistance: ", resistance)
+	#$UI/Info/Data.text = str("Name: ",p_name, "\n\nNumber of lifeforms: ", population, "M\n\nResistance: ", resistance)
+	$UI/Info/Name.text = p_name
+	$UI/Info/Population.text = str(population,"M")
+	$UI/Info/Resistance.text = str(resistance)
+	
 	if Global.selected_planet.is_player_base:
-		$UI/Info/Interact.text = "Claim Lives"
+		$UI/Info/Interact.texture_normal = claim_button
 	else:
-		$UI/Info/Interact.text = "Raid"
+		$UI/Info/Interact.texture_normal = raid_button
 
 func _physics_process(delta):
 	if Global.selected_planet != null:
@@ -78,7 +89,7 @@ func set_payment(payed_amount = 0):
 func _on_planet_captured(planet):
 	print(str(planet.name," captured!"))
 	if planet == Global.selected_planet:
-		$UI/Info/Interact.text = "Claim lives"
+		$UI/Info/Interact.texture_normal = claim_button
 	Global.raiding = false
 	
 	if planet.name == "Humpa":
@@ -114,3 +125,12 @@ func _on_PaymentTimer_timeout():
 
 func _on_Pay_button_down():
 	set_payment(lives)
+
+
+func _on_TextureButton_button_down():
+	AudioServer.set_bus_mute(0,!AudioServer.is_bus_mute(0))
+	match AudioServer.is_bus_mute(0):
+		true:
+			$UI/AudioButton.texture_normal = load("res://scenes/game/sound_off.png")
+		false:
+			$UI/AudioButton.texture_normal = load("res://scenes/game/sound_on.png")
