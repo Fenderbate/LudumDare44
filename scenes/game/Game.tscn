@@ -1,24 +1,25 @@
-[gd_scene load_steps=17 format=2]
+[gd_scene load_steps=18 format=2]
 
 [ext_resource path="res://scenes/game/Game.gd" type="Script" id=1]
 [ext_resource path="res://scenes/win/Win.tscn" type="PackedScene" id=2]
 [ext_resource path="res://scenes/lost/Lost.tscn" type="PackedScene" id=3]
 [ext_resource path="res://prefabs/planet_1/x32_planet1_texture.png" type="Texture" id=4]
-[ext_resource path="res://scenes/game/SolarSystem.gd" type="Script" id=5]
-[ext_resource path="res://prefabs/body_base/Body.tscn" type="PackedScene" id=6]
-[ext_resource path="res://prefabs/surface_base/Surface.tscn" type="PackedScene" id=7]
-[ext_resource path="res://prefabs/robobase/Robobase.tscn" type="PackedScene" id=8]
-[ext_resource path="res://prefabs/planet_1/x32_planet1_clouds.png" type="Texture" id=9]
-[ext_resource path="res://prefabs/planet_2/x32_planet2_texture.png" type="Texture" id=10]
-[ext_resource path="res://prefabs/planet_2/x32_planet2_clouds.png" type="Texture" id=11]
-[ext_resource path="res://prefabs/planet_3/x32_planet3_texture.png" type="Texture" id=12]
-[ext_resource path="res://prefabs/planet_3/x32_planet3_clouds.png" type="Texture" id=13]
-[ext_resource path="res://prefabs/sun/x64_sun_texture.png" type="Texture" id=14]
-[ext_resource path="res://prefabs/sun/x64_sun_mask.png" type="Texture" id=15]
-[ext_resource path="res://prefabs/raid_ship/RaidShip.tscn" type="PackedScene" id=16]
+[ext_resource path="res://scenes/game/parallax_1.png" type="Texture" id=5]
+[ext_resource path="res://scenes/game/SolarSystem.gd" type="Script" id=6]
+[ext_resource path="res://prefabs/body_base/Body.tscn" type="PackedScene" id=7]
+[ext_resource path="res://prefabs/surface_base/Surface.tscn" type="PackedScene" id=8]
+[ext_resource path="res://prefabs/robobase/Robobase.tscn" type="PackedScene" id=9]
+[ext_resource path="res://prefabs/planet_1/x32_planet1_clouds.png" type="Texture" id=10]
+[ext_resource path="res://prefabs/planet_2/x32_planet2_texture.png" type="Texture" id=11]
+[ext_resource path="res://prefabs/planet_2/x32_planet2_clouds.png" type="Texture" id=12]
+[ext_resource path="res://prefabs/planet_3/x32_planet3_texture.png" type="Texture" id=13]
+[ext_resource path="res://prefabs/planet_3/x32_planet3_clouds.png" type="Texture" id=14]
+[ext_resource path="res://prefabs/sun/x64_sun_texture.png" type="Texture" id=15]
+[ext_resource path="res://prefabs/sun/x64_sun_mask.png" type="Texture" id=16]
+[ext_resource path="res://prefabs/raid_ship/RaidShip.tscn" type="PackedScene" id=17]
 
 [node name="Game" type="Node2D"]
-position = Vector2( 1536, 304 )
+position = Vector2( 1539.16, 305.035 )
 script = ExtResource( 1 )
 victory = ExtResource( 2 )
 lost = ExtResource( 3 )
@@ -31,7 +32,6 @@ one_shot = true
 autostart = true
 
 [node name="UI" type="CanvasLayer" parent="."]
-editor/display_folded = true
 
 [node name="StopRaid" type="Button" parent="UI"]
 visible = false
@@ -122,28 +122,39 @@ drag_margin_top = 0.0
 drag_margin_right = 0.0
 drag_margin_bottom = 0.0
 
+[node name="ParallaxBackground" type="ParallaxBackground" parent="Camera2D"]
+
+[node name="ParallaxLayer" type="ParallaxLayer" parent="Camera2D/ParallaxBackground"]
+motion_scale = Vector2( 0.5, 0.5 )
+motion_mirroring = Vector2( 512, 300 )
+
+[node name="Sprite" type="Sprite" parent="Camera2D/ParallaxBackground/ParallaxLayer"]
+texture = ExtResource( 5 )
+centered = false
+
 [node name="SolarSystem" type="YSort" parent="."]
-script = ExtResource( 5 )
+editor/display_folded = true
+script = ExtResource( 6 )
 
 [node name="Pivot1" type="Position2D" parent="SolarSystem"]
 
-[node name="Humpa" parent="SolarSystem/Pivot1" instance=ExtResource( 6 )]
+[node name="Humpa" parent="SolarSystem/Pivot1" instance=ExtResource( 7 )]
 editor/display_folded = true
 position = Vector2( -204.25, 0 )
 planet_name = "Humpa (human base)"
 MAX_POPULATION = 1200.0
 MAX_RESISTANCE_POWER = 534.0
 
-[node name="Surface" parent="SolarSystem/Pivot1/Humpa" instance=ExtResource( 7 )]
+[node name="Surface" parent="SolarSystem/Pivot1/Humpa" instance=ExtResource( 8 )]
 
 [node name="Pivot2" type="Position2D" parent="SolarSystem"]
 
-[node name="Robobase" parent="SolarSystem/Pivot2" instance=ExtResource( 8 )]
+[node name="Robobase" parent="SolarSystem/Pivot2" instance=ExtResource( 9 )]
 position = Vector2( -597.51, 0 )
 
 [node name="Pivot3" type="Position2D" parent="SolarSystem"]
 
-[node name="Lagred" parent="SolarSystem/Pivot3" instance=ExtResource( 6 )]
+[node name="Lagred" parent="SolarSystem/Pivot3" instance=ExtResource( 7 )]
 editor/display_folded = true
 position = Vector2( -115.35, 0 )
 sprite_size = 16.0
@@ -152,14 +163,14 @@ regen_time_interval = 0.75
 MAX_POPULATION = 200.0
 MAX_RESISTANCE_POWER = 20.0
 
-[node name="Surface" parent="SolarSystem/Pivot3/Lagred" instance=ExtResource( 7 )]
+[node name="Surface" parent="SolarSystem/Pivot3/Lagred" instance=ExtResource( 8 )]
 scale = Vector2( 0.5, 0.5 )
 land = ExtResource( 4 )
-clouds = ExtResource( 9 )
+clouds = ExtResource( 10 )
 
 [node name="Pivot4" type="Position2D" parent="SolarSystem"]
 
-[node name="Goracle" parent="SolarSystem/Pivot4" instance=ExtResource( 6 )]
+[node name="Goracle" parent="SolarSystem/Pivot4" instance=ExtResource( 7 )]
 editor/display_folded = true
 position = Vector2( -448.49, 0 )
 sprite_size = 48.0
@@ -168,52 +179,50 @@ regen_time_interval = 0.25
 MAX_POPULATION = 10.0
 MAX_RESISTANCE_POWER = 5.0
 
-[node name="Surface" parent="SolarSystem/Pivot4/Goracle" instance=ExtResource( 7 )]
+[node name="Surface" parent="SolarSystem/Pivot4/Goracle" instance=ExtResource( 8 )]
 scale = Vector2( 1.5, 1.5 )
-land = ExtResource( 10 )
-clouds = ExtResource( 11 )
+land = ExtResource( 11 )
+clouds = ExtResource( 12 )
 
 [node name="Pivot5" type="Position2D" parent="SolarSystem"]
 
-[node name="Ikler" parent="SolarSystem/Pivot5" instance=ExtResource( 6 )]
+[node name="Ikler" parent="SolarSystem/Pivot5" instance=ExtResource( 7 )]
 editor/display_folded = true
 position = Vector2( -321.74, 0 )
 planet_name = "Ikler"
 regen_time_interval = 0.5
 MAX_POPULATION = 320.0
 
-[node name="Surface" parent="SolarSystem/Pivot5/Ikler" instance=ExtResource( 7 )]
-land = ExtResource( 12 )
-clouds = ExtResource( 13 )
+[node name="Surface" parent="SolarSystem/Pivot5/Ikler" instance=ExtResource( 8 )]
+land = ExtResource( 13 )
+clouds = ExtResource( 14 )
 
-[node name="Sun" parent="SolarSystem" instance=ExtResource( 7 )]
-land = ExtResource( 14 )
+[node name="Sun" parent="SolarSystem" instance=ExtResource( 8 )]
+land = ExtResource( 15 )
 clouds = null
-mask = ExtResource( 15 )
+mask = ExtResource( 16 )
 
-[node name="RaidShip" parent="." instance=ExtResource( 16 )]
-position = Vector2( -115.394, 30.2355 )
+[node name="RaidShip" parent="." instance=ExtResource( 17 )]
+position = Vector2( -299.328, 86.7453 )
 
-[node name="RaidShip2" parent="." instance=ExtResource( 16 )]
-position = Vector2( -161.944, -117.965 )
+[node name="RaidShip2" parent="." instance=ExtResource( 17 )]
+position = Vector2( 233.625, 96.9939 )
 
-[node name="RaidShip3" parent="." instance=ExtResource( 16 )]
-position = Vector2( -241.745, -104.665 )
+[node name="RaidShip3" parent="." instance=ExtResource( 17 )]
+position = Vector2( 115.042, -234.305 )
+scale = Vector2( 1.34045, 1.42153 )
 
-[node name="RaidShip4" parent="." instance=ExtResource( 16 )]
-position = Vector2( -11.8441, -136.015 )
+[node name="RaidShip4" parent="." instance=ExtResource( 17 )]
+position = Vector2( 284.001, -77.2891 )
 
-[node name="RaidShip5" parent="." instance=ExtResource( 16 )]
-position = Vector2( -90.6942, -182.565 )
+[node name="RaidShip5" parent="." instance=ExtResource( 17 )]
+position = Vector2( -174.905, -200.294 )
 
-[node name="RaidShip6" parent="." instance=ExtResource( 16 )]
-position = Vector2( -53.6442, -76.1647 )
+[node name="RaidShip6" parent="." instance=ExtResource( 17 )]
+position = Vector2( 63.8075, 204.168 )
 
-[node name="RaidShip7" parent="." instance=ExtResource( 16 )]
-position = Vector2( 141.106, -96.1147 )
-
-[node name="RaidShip8" parent="." instance=ExtResource( 16 )]
-position = Vector2( 23.3059, -189.215 )
+[node name="RaidShip8" parent="." instance=ExtResource( 17 )]
+position = Vector2( -202.733, 146.52 )
 
 [connection signal="timeout" from="Utility/PaymentTimer" to="." method="_on_PaymentTimer_timeout"]
 [connection signal="button_down" from="UI/StopRaid" to="." method="_on_StopRaid_button_down"]

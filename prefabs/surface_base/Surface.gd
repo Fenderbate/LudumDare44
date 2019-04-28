@@ -12,8 +12,8 @@ export(Color)var tone = Color.white
 func _ready():
 	$Land.texture = land
 	$Clouds.texture = clouds
-	$Land.material.set_shader_param("speed",rotation_speed)
-	$Clouds.material.set_shader_param("speed",rotation_speed * rand_range(0.85,1.15))
+	$Land.material.set_shader_param("speed",rotation_speed * rand_range(0.75,0.95))
+	$Clouds.material.set_shader_param("speed",rotation_speed * rand_range(0.65,1.45))
 	$Land.material.set_shader_param("mask_texture",mask)
 	$Clouds.material.set_shader_param("mask_texture",mask)
 	modulate = tone
