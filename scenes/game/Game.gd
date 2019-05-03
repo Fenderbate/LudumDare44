@@ -56,6 +56,9 @@ func _physics_process(delta):
 	else:
 		pass
 	$UI/Panel/PaymentTime.value = ($Utility/PaymentTimer.time_left / $Utility/PaymentTimer.wait_time)*100
+	
+	if !Global.raiding and $UI/StopRaid.visible:
+		$UI/StopRaid.hide()
 
 func set_payment(payed_amount = 0):
 	if payed_amount > lives:

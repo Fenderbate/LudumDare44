@@ -41,7 +41,6 @@ autoplay = true
 mix_target = 2
 
 [node name="Utility" type="Node" parent="."]
-editor/display_folded = true
 
 [node name="PaymentTimer" type="Timer" parent="Utility"]
 wait_time = 120.0
